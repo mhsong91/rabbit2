@@ -27,6 +27,7 @@ public class UserInfoServiceImpl implements UserInfoService{
 		if(ui!=null) {
 			if(ui.getAdmin()==1) {
 				rMap.put("user", ui.getUiId());
+				rMap.put("userNo", ui.getUiNo());
 				rMap.put("msg", ui.getUiName() + "사장님 로그인에 성공하셨습니다.");
 				rMap.put("aiz", true);
 				return true;

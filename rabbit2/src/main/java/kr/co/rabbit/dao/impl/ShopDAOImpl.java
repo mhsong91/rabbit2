@@ -25,4 +25,13 @@ public class ShopDAOImpl implements ShopDAO {
 		return KShopList;
 	}
 
+	@Override
+	public List<ShopVO> selectConnectionInfoList(int uiNo) {
+		SqlSession ss = ssf.openSession();
+		List<ShopVO> spList = ss.selectList("shop.selectAdminShop",uiNo);
+		return spList;
+	}
+
+
+
 }

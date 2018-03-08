@@ -35,7 +35,9 @@ public class UserInfoController {
 		
 		if(uis.login(map, ui)) {
 			hs.setAttribute("user", map.get("user"));
+			hs.setAttribute("userNo", map.get("userNo"));
 		}
+		System.out.println(hs.getAttribute("user"));
 		return map;
 	}
 	
