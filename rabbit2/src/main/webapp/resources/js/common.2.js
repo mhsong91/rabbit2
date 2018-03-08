@@ -8,44 +8,27 @@ var AjaxUtil = function (url, params, type, dataType){
 		return null;
 	}
 	this.url = url;
-	this.param = "";
-	this.type = type?type:"POST";
+	var initData = {}
 	
+	this.param = JSON.stringify(initData);
 	if(params){
 		var paramArr = params.split(",");
 
 		var data = {};
 		for(var i=0,max=paramArr.length;i<max;i++){
-			//input, select, textarea
-			var objName = paramArr[i];
-			var obj = $("[name=" + objName + "]");
-			if(obj.length==0){
-				alert(objName + "라는 name을 가진 객체가 없습니다.");
-				throw "Error : name[" + objName + "] is not found in html!!";
+			var objType =  paramArr[i].split("_")[0];
+			var objName = paramArr[i].split("_")[1];
+			
+			if(objType=="it"){
+				data[objName] = $("input[name=" + objName +"]").val();
+			}else if(objType=="s"){
+				data[objName] = $("select[name=" + objName +"]").val();
 			}
-			var objTag = obj.prop("tagName");
-			var selector = "";
-			if(objTag=="INPUT"){
-				selector = "input[name=" + objName +"]";
-				if(obj.attr("type")=="radio"){
-					selector += ":checked";
-				}
-			}else if(objTag=="SELECT"){
-				selector = "select[name=" + objName +"]";
-			}else if(objTag=="TEXTAREA"){
-				selector = "textarea[name=" + objName +"]";
-			}else{
-				alert(objName + "의 엘리먼트가 form태그가 아닙니다.");
-				throw "Error : The element tag is not instead in formtags!!";
-			}
-			data[objName] = $(selector).val();
 		}
-		console.log(data);
 		this.param = JSON.stringify(data);
-		if(this.type.toUpperCase()=="GET"){
-			this.param = encodeURIComponent(this.param);
-		}
+		
 	}
+	this.type = type?type:"POST";
 	this.dataType = dataType?dataType:"json";
 	this.callbackSuccess = function(json){
     	var url = json.url;
@@ -73,7 +56,7 @@ var AjaxUtil = function (url, params, type, dataType){
 	    ,   beforeSend: function(xhr) {
 	        xhr.setRequestHeader("Content-Type", "application/json");
 	    }
-	    ,   data     : this.param
+	    ,   data     : encodeURIComponent(this.param)
 	    ,   success : this.callbackSuccess
 	    ,   error : function(xhr, status, e) {
 		    	alert("에러 : "+xhr.responseText);
@@ -81,10 +64,8 @@ var AjaxUtil = function (url, params, type, dataType){
 		done : function(e) {
 		}
 		});
- 
 	}
 }
-
 
 var AjaxUtilForList = function (target, url, params, type, dataType){
 	var imgs = {
@@ -115,6 +96,10 @@ var AjaxUtilForList = function (target, url, params, type, dataType){
 		au.send(this.callback);
 	}
 }
+/*
+ * dhtmlx 커스터 마이징
+ */
+
 
 
 
