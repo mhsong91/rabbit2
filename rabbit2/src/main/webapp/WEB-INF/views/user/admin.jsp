@@ -16,6 +16,8 @@ var str ="";
  	for(var i=0;i<res.spList.length;i++){  
 		str += res.spList[0].shopName+",";
  	} 
+ 	
+ 	
 	$("#shopName").html("<h1>"+str+"사장님환영합니다"+"</h1>");
 	
 }
