@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.rabbit.service.UserInfoService;
 import kr.co.rabbit.vo.UserInfoVO;
@@ -36,8 +37,8 @@ public class UserInfoController {
 		if(uis.login(map, ui)) {
 			hs.setAttribute("user", map.get("user"));
 			hs.setAttribute("userNo", map.get("userNo"));
+			hs.setAttribute("userInfo", map.get("userInfo"));
 		}
-		System.out.println(hs.getAttribute("user"));
 		return map;
 	}
 	
@@ -60,7 +61,6 @@ public class UserInfoController {
 	
 	@RequestMapping(value="/check", method=RequestMethod.POST)
 	public @ResponseBody Map<String, Object>  join2(@RequestBody Map rmap){
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!"+rmap);
 		UserInfoVO ui=new UserInfoVO();
 		ui.setUiId((String) rmap.get("uiId"));
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -73,6 +73,12 @@ public class UserInfoController {
 			map.put("biz", true);
 		}
 		return map;
+	}
+	@RequestMapping("/logout")
+	public ModelAndView goIndex(ModelAndView mav,HttpSession hs) {
+		hs.invalidate();
+		mav.setViewName("user/login");
+		return mav;
 	}
 
 

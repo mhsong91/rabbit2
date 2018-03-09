@@ -14,8 +14,7 @@ function adminHave(){
 function callback(res){
 	console.log(res.spList[0].shopName);
 }
-"<h1>히아요^^</h1>
-"
+
 </script>
 
 <body onload="adminHave()">
