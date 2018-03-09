@@ -12,14 +12,19 @@ function adminHave(){
 	au.send(callback);  
 }
 function callback(res){
-	console.log(res.spList[0].shopName);
+var str ="";
+ 	for(var i=0;i<res.spList.length;i++){  
+		str += res.spList[0].shopName+",";
+ 	} 
+	$("#shopName").html("<h1>"+str+"사장님환영합니다"+"</h1>");
+	
 }
 
 </script>
 
 <body onload="adminHave()">
 <section class="section">
-<h1>사장님 환영합니다</h1>
+<div id="shopName"></div>
 
 </section>
 </body>
